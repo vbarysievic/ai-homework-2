@@ -3,7 +3,6 @@ import type { User } from "./types/User";
 import { fetchUsers } from "./services/api";
 import { UserTable } from "./components/UserTable";
 import { UserDetailModal } from "./components/UserDetailModal";
-import "./App.css";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -46,9 +45,9 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>User Management System</h1>
-        <p>Manage and view user information from JSONPlaceholder API</p>
+      <header className="app-header mb-8">
+        <h1 className="text-3xl font-bold text-center mb-2">Homework 2</h1>
+        <p className="text-lg text-gray-600 text-center">Users table</p>
       </header>
 
       <main className="app-main">

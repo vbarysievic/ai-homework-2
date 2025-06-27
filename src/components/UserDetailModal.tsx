@@ -1,5 +1,4 @@
 import type { User } from "../types/User";
-import "./UserDetailModal.css";
 
 interface UserDetailModalProps {
   user: User | null;
@@ -13,92 +12,89 @@ export const UserDetailModal = ({ user, isOpen, onClose }: UserDetailModalProps)
   const mapUrl = `https://www.google.com/maps?q=${user.address.geo.lat},${user.address.geo.lng}`;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>User Details</h2>
-          <button className="close-button" onClick={onClose}>
-            ×
-          </button>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+      onClick={onClose}
+      tabIndex={0}
+      aria-label="Close modal"
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
+    >
+      <div
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8"
+        onClick={(e) => e.stopPropagation()}
+        tabIndex={0}
+        aria-modal="true"
+        role="dialog"
+      >
+        <button
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          onClick={onClose}
+          aria-label="Close"
+          tabIndex={0}
+        >
+          &times;
+        </button>
+        <div className="mb-6">
+          <div className="text-2xl font-bold text-gray-900 mb-1">{user.name}</div>
+          <a
+            href={`mailto:${user.email}`}
+            className="text-blue-600 hover:underline text-base mb-4 block"
+            tabIndex={0}
+            aria-label={`Send email to ${user.email}`}
+          >
+            {user.email}
+          </a>
         </div>
-
-        <div className="modal-body">
-          <div className="user-section">
-            <h3>Personal Information</h3>
-            <div className="info-grid">
-              <div className="info-item">
-                <label>Name:</label>
-                <span>{user.name}</span>
-              </div>
-              <div className="info-item">
-                <label>Username:</label>
-                <span>{user.username}</span>
-              </div>
-              <div className="info-item">
-                <label>Email:</label>
-                <span>{user.email}</span>
-              </div>
-              <div className="info-item">
-                <label>Phone:</label>
-                <span>{user.phone}</span>
-              </div>
-              <div className="info-item">
-                <label>Website:</label>
-                <span>
-                  <a href={`https://${user.website}`} target="_blank" rel="noopener noreferrer">
-                    {user.website}
-                  </a>
-                </span>
-              </div>
-            </div>
+        <div className="mb-6">
+          <div className="font-bold text-lg text-gray-900 mb-2">Address</div>
+          <div className="text-gray-700 mb-1">
+            {user.address.street}, {user.address.suite}
           </div>
-
-          <div className="user-section">
-            <h3>Address</h3>
-            <div className="info-grid">
-              <div className="info-item">
-                <label>Street:</label>
-                <span>{user.address.street}</span>
-              </div>
-              <div className="info-item">
-                <label>Suite:</label>
-                <span>{user.address.suite}</span>
-              </div>
-              <div className="info-item">
-                <label>City:</label>
-                <span>{user.address.city}</span>
-              </div>
-              <div className="info-item">
-                <label>Zipcode:</label>
-                <span>{user.address.zipcode}</span>
-              </div>
-              <div className="info-item">
-                <label>Location:</label>
-                <span>
-                  <a href={mapUrl} target="_blank" rel="noopener noreferrer">
-                    View on Map
-                  </a>
-                </span>
-              </div>
-            </div>
+          <div className="text-gray-700 mb-1">
+            {user.address.city}, {user.address.zipcode}
           </div>
-
-          <div className="user-section">
-            <h3>Company</h3>
-            <div className="info-grid">
-              <div className="info-item">
-                <label>Name:</label>
-                <span>{user.company.name}</span>
-              </div>
-              <div className="info-item">
-                <label>Catch Phrase:</label>
-                <span>{user.company.catchPhrase}</span>
-              </div>
-              <div className="info-item">
-                <label>Business:</label>
-                <span>{user.company.bs}</span>
-              </div>
-            </div>
+          <a
+            href={mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-blue-600 hover:underline text-sm mt-2"
+            tabIndex={0}
+            aria-label="View on map"
+          >
+            <span className="mr-1 text-red-500">📍</span> View on map
+          </a>
+        </div>
+        <div className="mb-6">
+          <div className="font-bold text-lg text-gray-900 mb-2">Contact</div>
+          <div className="text-gray-700 mb-1">
+            <span className="font-semibold">Phone:</span> {user.phone}
+          </div>
+          <div className="text-gray-700 mb-1">
+            <span className="font-semibold">Website:</span>{" "}
+            <a
+              href={`https://${user.website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+              tabIndex={0}
+              aria-label={`Visit website ${user.website}`}
+            >
+              {user.website}
+            </a>
+          </div>
+        </div>
+        <div>
+          <div className="font-bold text-lg text-gray-900 mb-2">Company</div>
+          <div className="text-gray-700 mb-1">
+            <span className="font-semibold">Name:</span> {user.company.name}
+          </div>
+          <div className="text-gray-700 mb-1">
+            <span className="font-semibold">Catchphrase:</span> {user.company.catchPhrase}
+          </div>
+          <div className="text-gray-700 mb-1">
+            <span className="font-semibold">Business:</span> {user.company.bs}
           </div>
         </div>
       </div>
